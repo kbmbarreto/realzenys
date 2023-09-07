@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversor Zenys</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff6600; /* Laranja forte */
+            margin-bottom: 20px; /* Espaço abaixo do título */
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: inline-block; /* Centraliza o formulário */
+        }
+
+        label {
+            font-weight: bold;
+            color: #0078d4; /* Azul da LevelUp */
+        }
+
+        input[type="text"] {
+            width: 150px; /* Largura reduzida dos campos de entrada */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #0078d4; /* Azul da LevelUp */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #005a9e; /* Azul mais escuro da LevelUp */
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        strong {
+            color: #ff6600; /* Laranja forte */
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversor Zenys</h1>
+    <form onsubmit="converter(); return false;">
+        <label>Real</label>
+        <input type="text" id="real">
+        <label>Zenys</label>
+        <input type="text" id="zenys">
+        <input type="submit" value="Converter">
+    </form>
+    <p>Valor em Zenys: <span id="valorEmZenys"></span></p>
+    <p>Valor em Real: <span id="valorEmReal"></span></p>
+    <p><strong>Dica:</strong> k = 1.000, kk (ou m) = 1.000.000, kkk (ou b) = 1.000.000.000</p>
+
+    <script>
+        function formatNumber(num) {
+            if (num >= 1e9) {
+                return (num / 1e9).toFixed(2) + " b";
+            } else if (num >= 1e6) {
+                return (num / 1e6).toFixed(2) + " kk";
+            } else if (num >= 1e3) {
+                return (num / 1e3).toFixed(2) + " k";
+            } else {
+                return num.toFixed(2);
+            }
+        }
+
+        function converter(){
+            var real = document.getElementById('real').value;
+            var zenys = document.getElementById('zenys').value;
+            var valorEmZenys = parseFloat(real) * (1000000 / 18); // 1.000.000 Zenys dividido por 18 Reais
+            var valorEmReal = parseFloat(zenys) * (18 / 1000000); // 18 Reais dividido por 1.000.000 Zenys
+
+            document.getElementById('valorEmZenys').innerHTML = formatNumber(valorEmZenys);
+            document.getElementById('valorEmReal').innerHTML = formatNumber(valorEmReal);
+        }
+    </script>
+</body>
+</html>
