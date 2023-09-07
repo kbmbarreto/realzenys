@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Conversor Zenys</title>
+    <title>Real Zenys</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,8 +11,8 @@
         }
 
         h1 {
-            color: #ff6600; /* Laranja forte */
-            margin-bottom: 20px; /* Espaço abaixo do título */
+            color: #ff6600;
+            margin-bottom: 20px;
         }
 
         form {
@@ -20,16 +20,16 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            display: inline-block; /* Centraliza o formulário */
+            display: inline-block;
         }
 
         label {
             font-weight: bold;
-            color: #0078d4; /* Azul da LevelUp */
+            color: #0078d4;
         }
 
-        input[type="text"] {
-            width: 150px; /* Largura reduzida dos campos de entrada */
+        input[type="text"], select {
+            width: 150px;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
@@ -37,7 +37,7 @@
         }
 
         input[type="submit"] {
-            background-color: #0078d4; /* Azul da LevelUp */
+            background-color: #0078d4;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -46,7 +46,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #005a9e; /* Azul mais escuro da LevelUp */
+            background-color: #005a9e;
         }
 
         p {
@@ -54,44 +54,55 @@
         }
 
         strong {
-            color: #ff6600; /* Laranja forte */
+            color: #ff6600;
         }
     </style>
 </head>
 <body>
-    <h1>Conversor Zenys</h1>
+    <h1>Real Zenys - Ragnarök Online</h1>
     <form onsubmit="converter(); return false;">
-        <label>Real</label>
-        <input type="text" id="real">
-        <label>Zenys</label>
-        <input type="text" id="zenys">
+        <label>Quantidade</label>
+        <input type="text" id="quantidade">
+        <label>De</label>
+        <select id="de">
+            <option value="reais">Reais (R$)</option>
+            <option value="zenys">Zenys (z)</option>
+            <option value="rops">ROPs</option>
+        </select>
+        <label>Para</label>
+        <select id="para">
+            <option value="reais">Reais (R$)</option>
+            <option value="zenys">Zenys (z)</option>
+            <option value="rops">ROPs</option>
+        </select>
         <input type="submit" value="Converter">
     </form>
-    <p>Valor em Zenys: <span id="valorEmZenys"></span></p>
-    <p>Valor em Real: <span id="valorEmReal"></span></p>
-    <p><strong>Dica:</strong> k = 1.000, kk (ou m) = 1.000.000, kkk (ou b) = 1.000.000.000</p>
+    <p>Resultado: <span id="resultado"></span></p>
 
     <script>
-        function formatNumber(num) {
-            if (num >= 1e9) {
-                return (num / 1e9).toFixed(2) + " b";
-            } else if (num >= 1e6) {
-                return (num / 1e6).toFixed(2) + " kk";
-            } else if (num >= 1e3) {
-                return (num / 1e3).toFixed(2) + " k";
+        function converter() {
+            var quantidade = parseFloat(document.getElementById('quantidade').value);
+            var de = document.getElementById('de').value;
+            var para = document.getElementById('para').value;
+            var resultado;
+
+            if (de === 'reais' && para === 'zenys') {
+                resultado = quantidade * (1000.000 / 0.19);
+            } else if (de === 'reais' && para === 'rops') {
+                resultado = quantidade * (11.000 / 19.90);
+            } else if (de === 'zenys' && para === 'reais') {
+                resultado = quantidade * (0.19 / 1000.000);
+            } else if (de === 'zenys' && para === 'rops') {
+                resultado = quantidade * (250 / 350000);
+            } else if (de === 'rops' && para === 'reais') {
+                resultado = quantidade * (19.90 / 11000);
+            } else if (de === 'rops' && para === 'zenys') {
+                resultado = quantidade * (350000 / 250);
             } else {
-                return num.toFixed(2);
+                resultado = quantidade;
             }
-        }
 
-        function converter(){
-            var real = document.getElementById('real').value;
-            var zenys = document.getElementById('zenys').value;
-            var valorEmZenys = parseFloat(real) * (1000000 / 18); // 1.000.000 Zenys dividido por 18 Reais
-            var valorEmReal = parseFloat(zenys) * (18 / 1000000); // 18 Reais dividido por 1.000.000 Zenys
-
-            document.getElementById('valorEmZenys').innerHTML = formatNumber(valorEmZenys);
-            document.getElementById('valorEmReal').innerHTML = formatNumber(valorEmReal);
+            document.getElementById('resultado').innerHTML = resultado.toFixed(12) + ' ' + (para === 'reais' ? 'R$' : para === 'zenys' ? 'z' : 'ROPs');
         }
     </script>
 </body>
