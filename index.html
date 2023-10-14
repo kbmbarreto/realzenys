@@ -56,6 +56,16 @@
         strong {
             color: #ff6600;
         }
+        
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -78,31 +88,36 @@
         <input type="submit" value="Converter">
     </form>
     <p>Resultado: <span id="resultado"></span></p>
+    
+    <div id="footer">Desenvolvido por Kleber Barreto - kleber.barreto@msn.com - 2023</div>
 
     <script>
         function converter() {
             var quantidade = parseFloat(document.getElementById('quantidade').value);
+            var cotacaoZenyToReal = 1000000 / 0.19;
+            var cotacaoRopsToReal = 11000 / 19.90;
+            var cotacaoRopsToZeny = 250 / 350000
             var de = document.getElementById('de').value;
             var para = document.getElementById('para').value;
             var resultado;
 
             if (de === 'reais' && para === 'zenys') {
-                resultado = quantidade * (1000.000 / 0.19);
+                resultado = quantidade * cotacaoZenyToReal;
             } else if (de === 'reais' && para === 'rops') {
-                resultado = quantidade * (11.000 / 19.90);
+                resultado = quantidade * cotacaoRopsToReal;
             } else if (de === 'zenys' && para === 'reais') {
-                resultado = quantidade * (0.19 / 1000.000);
+                resultado = quantidade / cotacaoZenyToReal;
             } else if (de === 'zenys' && para === 'rops') {
-                resultado = quantidade * (250 / 350000);
+                resultado = quantidade * cotacaoRopsToZeny;
             } else if (de === 'rops' && para === 'reais') {
-                resultado = quantidade * (19.90 / 11000);
+                resultado = quantidade / cotacaoRopsToReal;
             } else if (de === 'rops' && para === 'zenys') {
-                resultado = quantidade * (350000 / 250);
+                resultado = quantidade / cotacaoRopsToZeny;
             } else {
                 resultado = quantidade;
             }
 
-            document.getElementById('resultado').innerHTML = resultado.toFixed(12) + ' ' + (para === 'reais' ? 'R$' : para === 'zenys' ? 'z' : 'ROPs');
+            document.getElementById('resultado').innerHTML = resultado.toFixed(2) + ' ' + (para === 'reais' ? 'R$' : para === 'zenys' ? 'z' : 'ROPs');
         }
     </script>
 </body>
