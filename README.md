@@ -11,6 +11,7 @@ moedas do jogo, pois, muitas vezes, não sabia quanto deveria cobrar por um item
 
 - HTML
 - CSS
+- JavaScript
 
 ## Links úteis.
 
